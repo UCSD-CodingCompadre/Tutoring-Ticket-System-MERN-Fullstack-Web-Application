@@ -2,6 +2,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {GoSignIn, GoSignOut, GoPerson} from 'react-icons/go';
 import {logout, reset} from '../utilities/authSlice';
+import {clearTickets} from '../utilities/ticketSlice';
 
 export const Navbar = () =>
 {
@@ -27,6 +28,7 @@ export const Navbar = () =>
     {
         dispatch(logout());
         dispatch(reset());
+        dispatch(clearTickets());
         navigate('/');
     }
 

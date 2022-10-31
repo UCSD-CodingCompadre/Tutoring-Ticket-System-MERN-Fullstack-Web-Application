@@ -1,0 +1,61 @@
+.rbc-off-range-bg {
+  background: hsl(var(--b3));
+}
+
+.rbc-button-link {
+  color: hsl(var(--bc));
+}
+
+.rbc-today {
+  background-color: hsl(var(--nf));
+}
+
+.rbc-event {
+  background-color: hsl(var(--p));
+}
+
+.rbc-event-content {
+  color: hsl(var(--pc));
+}
+
+.rbc-toolbar button {
+  background-color: transparent;
+  color: hsl(var(--p));
+}
+.rbc-toolbar button:hover {
+  background-color: hsl(var(--p));
+}
+
+.rbc-toolbar button.rbc-active {
+  background-color: hsl(var(--p));
+  color: hsl(var(--pc));
+}
+.rbc-toolbar button.rbc-active:focus {
+  background-color: hsl(var(--p)) !important;
+}
+.rbc-toolbar button.rbc-active:hover {
+  background-color: hsl(var(--p)) !important;
+}
+
+.rbc-toolbar {
+  flex-direction: column;
+}
+.rbc-toolbar .rbc-toolbar-label {
+  order: 1 !important;
+}
+.rbc-toolbar button:focus {
+  background-color: hsl(var(--p)) !important;
+  color: hsl(var(--pc));
+}
+.rbc-toolbar button:hover {
+  background-color: hsl(var(--p)) !important;
+  transition: 0.5s;
+}
+.rbc-toolbar button:active {
+  background-color: hsl(var(--p)) !important;
+  color: hsl(var(--pc));
+}
+
+.rbc-btn-group {
+  margin-bottom: 10px;
+}/*# sourceMappingURL=calendar.css.map */

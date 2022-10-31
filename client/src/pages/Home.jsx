@@ -1,18 +1,38 @@
-import {useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link}from 'react-router-dom';
+import {getUserTickets, reset} from '../utilities/ticketSlice';
+
 
 export const Home = () =>
 {
 
     // Hold the user from the redux store
     const  {user} = useSelector(state => state.auth)
+    
+    // Hold the user's tickets
+    const {tickets} = useSelector((state) => state.ticket);
+
+    const dispatch = useDispatch();
 
     // Hold true if the user is a tutor
     const isTutor = user ? user.isAdmin : false;
 
     // Hold the useState for the reminder to sign up
     const [reminder, setReminder] = useState(user === null);
+    
+    // On render retrieve the student's tickets
+    useEffect(() =>
+    {
+        dispatch(getUserTickets());
+        dispatch(reset());
+
+        return () => 
+        {
+            dispatch(reset());
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>
@@ -78,7 +98,7 @@ export const Home = () =>
                                     className="toast toast-top toast-end absolute top-28"
                                     >
                                         <div 
-                                        lassName="alert alert-info w-28"
+                                        className="alert alert-info w-28"
                                         >
                                             Nah foo I am using Raul's new ticket system.
                                         </div>
@@ -100,22 +120,28 @@ export const Home = () =>
                                 </>
                                 :
                                 <>
-                                
-                                    {/* Hold the route to submit a new ticket */}
-                                    <Link 
-                                    className="btn btn-primary w-36 mb-4"
-                                    to="/new-ticket"
-                                    >
-                                        Submit a ticket
-                                    </Link>
 
-                                    {/* Hold the route to check the user's tickets */}
-                                    <Link 
-                                    className="btn btn-primary w-36 mb-6"
-                                    to="/my-tickets"
-                                    >
-                                        Check my tickets
-                                    </Link>
+                                    {/* Conditional render the routes depending if the student has a ticket or not */}
+                                    {
+                                        tickets.length === 0 ? 
+                                        
+                                        // Hold the route to submit a ticket
+                                        <Link 
+                                        className="btn btn-primary w-36 mb-6"
+                                        to="/new-ticket"
+                                        >
+                                            Submit a ticket
+                                        </Link>
+                                        :
+
+                                        // Hold the route to check the student's ticket 
+                                        <Link 
+                                        className="btn btn-primary w-36 mb-6"
+                                        to="/my-tickets"
+                                        >
+                                            Check my ticket
+                                        </Link>
+                                      }
                                 </>
                                 }
                             </div>
@@ -178,13 +204,13 @@ export const Home = () =>
                          className="modal-box relative"
                          >
                             <label 
-                            htmlFor="my-modal-3" c
-                            lassName="btn btn-sm btn-circle absolute right-2 top-2"
+                            htmlFor="my-modal-3" 
+                            className="btn btn-sm btn-circle absolute right-2 top-2"
                             onClick={() => setReminder(false)}>
                                 ✕
                             </label>
                             <h3 
-                            className="text-lg font-bold"
+                            className="text-lg font-bold pt-4"
                             >
                                 Welcome to CodingCocho's CSE/ECE Tutoring Center Ticket System
                             </h3>

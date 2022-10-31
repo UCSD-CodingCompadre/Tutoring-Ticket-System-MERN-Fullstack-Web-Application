@@ -7,6 +7,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 // Hold the slices initial state
 const initialState = {
     user: user ? user : null,
+    hasSubmitted: false,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -73,13 +74,20 @@ export const authSlice = createSlice(
         name: 'auth',
         initialState,
         reducers: {
-            reset: (state) =>
+            reset(state) 
             {
                 state.isLoading = false
                 state.isError = false
                 state.isSuccess = false
                 state.message = ''
             },
+            setSubmission: (state) =>
+            {
+                return {
+                    ...state,
+                    hasSubmitted: !state.hasSubmitted
+                }
+            }
         },
         
         // Set the state based on action stage
@@ -128,5 +136,5 @@ export const authSlice = createSlice(
     }
 )
 
-export const {reset} = authSlice.actions;
+export const {reset, setSubmission} = authSlice.actions;
 export default authSlice.reducer;

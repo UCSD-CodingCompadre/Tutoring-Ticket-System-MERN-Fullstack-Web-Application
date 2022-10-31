@@ -85,6 +85,28 @@ export const getSpecificTicket = createAsyncThunk('tickets/getATicket', async(ti
     }
 })
 
+/*
+Delete the student's ticket 
+@param ticketId the id of the ticket
+@return object the ticket if it is deleted
+*/
+export const deleteTicket = createAsyncThunk('tickets/deleteTicket', async(ticketId, thunkAPI) =>
+{
+    
+    // Try to get the single ticket
+    try
+    {
+        const token = thunkAPI.getState().auth.user.token;
+        return await ticketService.closeTicket(ticketId, token);
+    }
+
+    // Else thrown an Error
+    catch(error)
+    {
+        const message = error.response.data.error;
+        return thunkAPI.rejectWithValue(message);
+    }
+})
 
 /*
 Get all the tickets for the tutor
@@ -118,12 +140,15 @@ export const ticketSlice = createSlice(
         {
             reset: (state) => 
             {
-                state.tickets = []
                 state.ticket = {}
                 state.isError = false
                 state.isSuccess = false
                 state.isLoading = false
                 state.message = ''
+            },
+            clearTickets: (state) =>
+            {
+                state.tickets = []
             }
         },
         
@@ -135,10 +160,12 @@ export const ticketSlice = createSlice(
                 {
                     state.isLoading = true
                 })
-                .addCase(createTicket.fulfilled, (state) =>
+                .addCase(createTicket.fulfilled, (state, action) =>
                 {
                     state.isLoading = false;
                     state.isSuccess = true;
+                    state.tickets.push(action.payload);
+    
                 })
                 .addCase(createTicket.rejected, (state, action) =>
                 {
@@ -194,9 +221,25 @@ export const ticketSlice = createSlice(
                     state.isError = true;
                     state.message = action.payload;
                 })
+                .addCase(deleteTicket.pending, (state) =>
+                {
+                    state.isLoading = true
+                })
+                .addCase(deleteTicket.fulfilled, (state, action) =>
+                {
+                    state.isLoading = false;
+                    state.isSuccess = true;
+                    state.tickets = [];
+                })
+                .addCase(deleteTicket.rejected, (state, action) =>
+                {
+                    state.isLoading = false;
+                    state.isError = true;
+                    state.message = action.payload;
+                })
         }
     }
 )
 
-export const {reset} = ticketSlice.actions
+export const {clearTickets, reset} = ticketSlice.actions
 export default ticketSlice.reducer;

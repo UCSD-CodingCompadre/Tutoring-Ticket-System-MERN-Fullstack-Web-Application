@@ -1,10 +1,26 @@
-import {Link} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {Link, useNavigate} from 'react-router-dom';
+import {deleteTicket} from '../utilities/ticketSlice';
 
 export const StudentTicket = (props) =>
 {
 
     // Deconstruct props
     const {id, description, product, status, tutor} = props;
+
+    // Hold the dispatch hook
+    const dispatch = useDispatch();
+
+    // Hold the navigate hook
+    const navigate = useNavigate();
+
+    // Component functions
+
+    const deleteStudentTicket = (ticketId) =>
+    {
+        dispatch(deleteTicket(ticketId));
+        navigate('/')
+    } 
 
     return (
         <>
@@ -40,6 +56,7 @@ export const StudentTicket = (props) =>
                         {/* Hold the button to delete this ticket from MongoDB */}
                         <button 
                         className="btn btn-primary"
+                        onClick={() => deleteStudentTicket(id)}
                         >
                             Delete
                         </button>

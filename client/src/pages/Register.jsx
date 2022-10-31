@@ -113,7 +113,7 @@ export const Register = () =>
 
             {/* Hold the page for the register route */}
             <div 
-            className="page w-full bg-base-200 flex items-center content-center pb-24 pt-10"
+            className="page w-full bg-base-200 flex items-center justify-center pb-24 pt-10"
             >
                 <div 
                 className="hero-content flex-col mx-auto"

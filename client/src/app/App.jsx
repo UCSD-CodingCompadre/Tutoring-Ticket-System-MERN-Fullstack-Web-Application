@@ -2,9 +2,11 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {Footer} from '../components/Footer';
 import {Navbar} from '../components/Navbar';
 import {PrivateRoute} from '../components/PrivateRoute';
+import {RedirectRoute} from '../components/RedirectRoute';
 import {EditTicket} from '../pages/EditTicket';
 import {Home} from '../pages/Home';
 import {Register}from '../pages/Register';
+import {Schedule} from '../pages/Schedule';
 import {SignIn} from '../pages/SignIn';
 import {StudentTickets} from '../pages/StudentTickets';
 import {TicketForm} from '../pages/TicketForm';
@@ -42,7 +44,7 @@ function App()
             <Route element={<SignIn />} path="/signin"></Route>
             
             {/* Establish route to prevent unauthorized users */}
-            <Route element={<PrivateRoute />} path="/new-ticket">
+            <Route element={<RedirectRoute />} path="/new-ticket">
                 
                 {/* Establish route to create a new ticket */}
                 <Route element={<TicketForm />} path="/new-ticket"></Route>
@@ -68,6 +70,8 @@ function App()
               {/* Establish route to see all tickets for tutor */}
               <Route element={<TutorTickets />} path="/tutor-tickets"></Route>
             </Route>
+
+            <Route element={<Schedule />} path="/schedule"></Route>
           </Routes>
         </main>
 

@@ -18,6 +18,7 @@ export const StudentTickets = () =>
     {
         return () =>
         {
+            
             if(isSuccess)
             {
                 dispatch(reset())
@@ -30,6 +31,8 @@ export const StudentTickets = () =>
     {
         dispatch(getUserTickets());
     }, [dispatch])
+
+    
 
     // Check if the tickets are loading
     if(isLoading)
