@@ -43,7 +43,9 @@ const registerUser =  asyncHandler(async(req, res) =>
             name: name,
             email: email,
             password: hashedPassword,
-            isAdmin: true
+            isAdmin: false,
+            isProfessor: false,
+            hasSubmitted: false
         }
     )
 
@@ -57,7 +59,9 @@ const registerUser =  asyncHandler(async(req, res) =>
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                isAdmin: true,
+                isAdmin: false,
+                isProfessor: false,
+                hasSubmitted: false,
                 token: generateToken(user.id)
             }
         )
@@ -98,6 +102,8 @@ const loginUser = asyncHandler(async(req, res) =>
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
+                isProfessor: user.isProfessor,
+                hasSubmitted: user.hasSubmitted,
                 token: generateToken(user.id)
             }
         )

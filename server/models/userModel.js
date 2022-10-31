@@ -33,10 +33,20 @@ const userSchema = mongoose.Schema(
             required: [true, 'Please notify me if you are a tutor'],
             default: false
         },
+        isProfessor: {
+            type: Boolean,
+            required: [true, 'Please notify me if you are a professor'],
+            default: false
+        },
         isBusy: {
             type: Boolean,
             require: [true],
             default: false 
+        },
+        hasSubmitted: {
+            type: Boolean,
+            require: [true],
+            default: false
         }
     },
     {
