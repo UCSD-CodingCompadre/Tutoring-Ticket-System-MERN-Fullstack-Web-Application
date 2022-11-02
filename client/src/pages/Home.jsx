@@ -1,22 +1,22 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link}from 'react-router-dom';
-import {getUserTickets, reset} from '../utilities/ticketSlice';
-
+import {reset} from '../utilities/ticketSlice';
 
 export const Home = () =>
 {
 
     // Hold the user from the redux store
-    const  {user} = useSelector(state => state.auth)
+    const {user} = useSelector(state => state.auth)
     
-    // Hold the user's tickets
-    const {tickets} = useSelector((state) => state.ticket);
-
+    // Hold the dispatch hook
     const dispatch = useDispatch();
 
     // Hold true if the user is a tutor
     const isTutor = user ? user.isAdmin : false;
+
+    // Hold true if the user is a professor
+    const isProfessor = user ? user.isProfessor : false;
 
     // Hold the useState for the reminder to sign up
     const [reminder, setReminder] = useState(user === null);
@@ -24,15 +24,13 @@ export const Home = () =>
     // On render retrieve the student's tickets
     useEffect(() =>
     {
-        dispatch(getUserTickets());
-        dispatch(reset());
 
         return () => 
         {
             dispatch(reset());
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -62,28 +60,30 @@ export const Home = () =>
                             >
 
                                 {/* Conditional render the toasts depending if the user is a tutor */}
-                                {isTutor && user ?
-                                <>
-                                    <div 
-                                    className="toast toast-top toast-start absolute top-6"
-                                    >
+                                {
+                                    isTutor &&
+                                    <>
                                         <div 
-                                        className="alert alert-success w-28"
+                                        className="toast toast-top toast-start absolute top-6"
                                         >
-                                            Is the ticket queue packed?
+                                            <div 
+                                            className="alert alert-success w-28"
+                                            >
+                                                Is the ticket queue packed?
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div 
-                                    className="toast toast-top toast-end absolute top-32"
-                                    >
                                         <div 
-                                        className="alert alert-info w-28"
+                                        className="toast toast-top toast-end absolute top-32"
                                         >
-                                            Why even ask that question.
+                                            <div 
+                                            className="alert alert-info w-28"
+                                            >
+                                                Why even ask that question.
+                                            </div>
                                         </div>
-                                    </div>
-                                </>
-                                :
+                                    </>
+                                }
+                                {!isTutor && user && !isProfessor &&
                                 <>
                                     <div 
                                     className="toast toast-top toast-start absolute top-6"
@@ -105,25 +105,47 @@ export const Home = () =>
                                     </div>
                                 </>
                                 }
+                                {isTutor && isProfessor &&
+                                    <>
+                                        <div 
+                                        className="toast toast-top toast-start absolute top-6"
+                                        >
+                                            <div 
+                                            className="alert alert-success w-28"
+                                            >
+                                                Professor can I get more hours?
+                                            </div>
+                                        </div>
+                                        <div 
+                                        className="toast toast-top toast-end absolute top-32"
+                                        >
+                                            <div 
+                                            className="alert alert-info w-28"
+                                            >
+                                                I'll have to think about it.
+                                            </div>
+                                        </div>
+                                    </>
+                                }
+                                
 
                                 {/* Conditional render the routes for the user depending if their a tutor or student */}
-                                {isTutor && user ?
-                                <>
+                                {isTutor && user && !isProfessor &&
+                                    <>
 
-                                    {/* Hold the route to view the all tickets */}
-                                    <Link 
-                                    className="btn btn-primary w-36 mb-4"
-                                    to="/tutor-tickets"
-                                    >
-                                        View Tickets
-                                    </Link>
-                                </>
-                                :
-                                <>
-
-                                    {/* Conditional render the routes depending if the student has a ticket or not */}
+                                        {/* Hold the route to view the all tickets */}
+                                        <Link 
+                                        className="btn btn-primary w-36 mb-4"
+                                        to="/tutor-tickets"
+                                        >
+                                            View Tickets
+                                        </Link>
+                                    </>
+                                }
+                                {user && !isTutor &&
+                                    <>
                                     {
-                                        tickets.length === 0 ? 
+                                        !user.hasSubmitted ? 
                                         
                                         // Hold the route to submit a ticket
                                         <Link 
@@ -142,7 +164,19 @@ export const Home = () =>
                                             Check my ticket
                                         </Link>
                                       }
-                                </>
+                                    </>
+                                }
+                                {isProfessor &&
+                                    <>
+                                        
+                                        {/* Hold the route to submit a ticket */}
+                                        <Link 
+                                        className="btn btn-primary w-36 mb-6"
+                                        to="/edit-schedule"
+                                        >
+                                            Schedule manager
+                                        </Link>
+                                    </>
                                 }
                             </div>
                         </div>

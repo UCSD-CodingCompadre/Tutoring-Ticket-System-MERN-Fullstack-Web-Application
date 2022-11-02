@@ -19,13 +19,13 @@ Create a ticket
 export const createTicket = createAsyncThunk('tickets/create', async(ticketData, thunkAPI) =>
 {
 
+
     // Try to create a ticket
     try
     {
 
         // Hold the JWT of the user creating the ticket
         const token = thunkAPI.getState().auth.user.token;
-
         return await ticketService.createTicket(ticketData, token);
     }
 
@@ -109,6 +109,32 @@ export const deleteTicket = createAsyncThunk('tickets/deleteTicket', async(ticke
 })
 
 /*
+Edit the student's ticket 
+@param ticketId the id of the ticket
+@return object the ticket if it is deleted
+*/
+export const editTicket = createAsyncThunk('tickets/editTicket', async(data, thunkAPI) =>
+{
+    const {id, editData} = data;
+
+    // Try to get the single ticket
+    try
+    {
+
+        const token = thunkAPI.getState().auth.user.token;
+        return await ticketService.editATicket(id, editData, token);
+    }
+
+    // Else thrown an Error
+    catch(error)
+    {
+        
+        const message = error.response.data.error;
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
+/*
 Get all the tickets for the tutor
 @param none
 @return arr all the tickets
@@ -119,8 +145,7 @@ export const getAllTickets = createAsyncThunk('tickets/getAllTickets', async(_, 
     // Try to get the all the tickets
     try
     {
-        const token = thunkAPI.getState().auth.user.token;
-        return await ticketService.getAllTickets(token);
+        return await ticketService.getAllTickets();
     }
 
     // Else throw an Error

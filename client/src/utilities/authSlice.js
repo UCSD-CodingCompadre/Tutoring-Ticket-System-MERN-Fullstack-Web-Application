@@ -7,6 +7,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 // Hold the slices initial state
 const initialState = {
     user: user ? user : null,
+    tutors: [],
     hasSubmitted: false,
     isError: false,
     isSuccess: false,
@@ -59,6 +60,30 @@ export const login = createAsyncThunk('auth/login', async(user, thunkAPI) =>
 })
 
 /*
+Update the user 
+@param user the user data
+@return object the user
+*/
+export const edit = createAsyncThunk('auth/edit', async(data, thunkAPI) =>
+{
+
+    // Try to log in the user
+    try
+    {
+
+        const token = thunkAPI.getState().auth.user.token;
+        return  await authService.editUser(data, token);
+    }
+
+    // Else thrown an Error using the thunkAPI
+    catch(error)
+    {
+        const message = error.response.data.error;
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
+/*
 Log out the user
 @param none
 @return none
@@ -66,6 +91,24 @@ Log out the user
 export const logout = createAsyncThunk('auth/logout', async() =>
 {
     await authService.signOut();
+})
+
+export const getTheTutors = createAsyncThunk('auth/get-tutors', async(_, thunkAPI) =>
+{
+    
+    // Try to create a ticket
+    try
+    {
+
+        return await authService.getTutors();
+    }
+
+    // Else thrown an Error
+    catch(error)
+    {
+        const message = error.response.data.error;
+        return thunkAPI.rejectWithValue(message);
+    }
 })
 
 // Hold the authSlice
@@ -81,13 +124,6 @@ export const authSlice = createSlice(
                 state.isSuccess = false
                 state.message = ''
             },
-            setSubmission: (state) =>
-            {
-                return {
-                    ...state,
-                    hasSubmitted: !state.hasSubmitted
-                }
-            }
         },
         
         // Set the state based on action stage
@@ -132,9 +168,25 @@ export const authSlice = createSlice(
                     state.message = action.payload;
                     state.user = null;
                 })
+                .addCase(getTheTutors.pending, (state) =>
+                {
+                    state.isLoading = true
+                })
+                .addCase(getTheTutors.fulfilled, (state, action) =>
+                {
+                    state.isLoading = false;
+                    state.isSuccess = true;
+                    state.tutors = action.payload;
+                })
+                .addCase(getTheTutors.rejected, (state, action) =>
+                {
+                    state.isLoading = false;
+                    state.isError = true;
+                    state.message = action.payload;
+                })
         },
     }
 )
 
-export const {reset, setSubmission} = authSlice.actions;
+export const {clearSubmission, reset, setSubmission, resetToInitialState} = authSlice.actions;
 export default authSlice.reducer;

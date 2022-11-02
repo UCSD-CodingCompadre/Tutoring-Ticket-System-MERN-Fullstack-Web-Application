@@ -55,7 +55,47 @@ const signOut = () =>
     localStorage.removeItem('user');
 }
 
+/*
+Edit a user 
+@param  ticketId the id of the ticket being searched
+                token the JWT of the user
+@return object the ticket
+*/
+const editUser = async(userData, token) =>
+{
+
+    // Hold the configuration for the get request
+    const config =
+    {
+        headers: 
+        {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    // Hold the response of the get request
+    const response = await axios.put(API_URL + 'submitted' , userData, config)
+    
+    return response.data;
+}
+
+/*
+Get the tutor accounts 
+@param none
+@return array the tutors
+*/
+const getTutors = async() =>
+{
+
+    const response = await axios.get(API_URL + 'tutors')
+    
+    return response.data
+}
+
+
 const authService = {
+    editUser,
+    getTutors,
     register,
     signIn,
     signOut

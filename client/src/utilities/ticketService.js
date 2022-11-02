@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Hold the url for API in the backend
-const API_URL = '/api/tickets/';
+const API_URL = '/api/tickets';
 
 /*
 Make a post request to create a ticket
@@ -106,7 +106,22 @@ Get all the tickets in the database
 const getAllTickets = async(token) =>
 {
 
-     // Hold the configuration for the get request
+    // Hold the response of the get request
+    const response = await axios.get(API_URL + '/tutor-view')
+    
+    return response.data;
+}
+
+/*
+Edit a specific user ticket
+@param  ticketId the id of the ticket being searched
+                token the JWT of the user
+@return object the ticket
+*/
+const editATicket = async(ticketId, ticketData, token) =>
+{
+
+    // Hold the configuration for the get request
     const config =
     {
         headers: 
@@ -116,7 +131,7 @@ const getAllTickets = async(token) =>
     }
 
     // Hold the response of the get request
-    const response = await axios.get(API_URL + '/tutor-view', config)
+    const response = await axios.put(API_URL + '/' + ticketId, ticketData, config)
     
     return response.data;
 }
@@ -125,6 +140,7 @@ const ticketService =
 {
     closeTicket,
     createTicket,
+    editATicket,
     getATicket,
     getAllTickets,
     getMyTickets

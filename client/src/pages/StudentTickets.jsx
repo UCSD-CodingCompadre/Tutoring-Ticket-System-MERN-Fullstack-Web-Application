@@ -30,6 +30,7 @@ export const StudentTickets = () =>
     useEffect(() =>
     {
         dispatch(getUserTickets());
+
     }, [dispatch])
 
     

@@ -13,7 +13,7 @@ export const TutorTickets = () =>
     // Hold the dispatch hook
     const dispatch = useDispatch();
 
-   // On unmount reset the ticket state
+    // On unmount reset the ticket state
     useEffect(() => 
     {
         return () =>
@@ -25,7 +25,7 @@ export const TutorTickets = () =>
         }
     }, [dispatch, isSuccess])
 
-   // On render retrieve the all the tickets
+    // On render retrieve the all the tickets
     useEffect(() =>
     {
         dispatch(getAllTickets());

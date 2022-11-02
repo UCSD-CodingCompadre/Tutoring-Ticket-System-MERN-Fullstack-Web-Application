@@ -1,5 +1,6 @@
-import {useDispatch} from 'react-redux';
-import {Link, useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {clearSubmission, edit} from '../utilities/authSlice';
 import {deleteTicket} from '../utilities/ticketSlice';
 
 export const StudentTicket = (props) =>
@@ -7,6 +8,9 @@ export const StudentTicket = (props) =>
 
     // Deconstruct props
     const {id, description, product, status, tutor} = props;
+
+    // Hold the user logged in 
+    const {user} = useSelector((state) => state.auth);
 
     // Hold the dispatch hook
     const dispatch = useDispatch();
@@ -18,9 +22,20 @@ export const StudentTicket = (props) =>
 
     const deleteStudentTicket = (ticketId) =>
     {
+        dispatch(clearSubmission());
+        // Dispatch the submission user action
+        dispatch(edit({
+            ...user,
+            hasSubmitted: false
+        }))
         dispatch(deleteTicket(ticketId));
         navigate('/')
-    } 
+    }
+    
+    const editStudentTicket = (ticketId) =>
+    {
+        navigate(`/my-tickets/${ticketId}`)
+    }
 
     return (
         <>
@@ -45,13 +60,12 @@ export const StudentTicket = (props) =>
                     >
                         
                         {/* Hold the route to edit the student's ticket */}
-                        <Link 
+                        <button 
                         className="btn btn-primary" 
-                        to="."
+                        onClick={() => editStudentTicket(id)}
                         >
                             Edit
-                        </Link>
-                        {/* <Link className="btn btn-primary" to={`/my-tickets/${id}`}>Edit</Link> */}
+                        </button>
                         
                         {/* Hold the button to delete this ticket from MongoDB */}
                         <button 

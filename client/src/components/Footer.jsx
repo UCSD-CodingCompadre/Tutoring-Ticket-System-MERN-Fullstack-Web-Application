@@ -18,16 +18,6 @@ export const Footer = () =>
                     className="text-xl"
                     />
                 </NavLink>
-
-                {/* Hold route to go to Schedule page*/}
-                <NavLink 
-                className={({isActive}) => isActive ? "active bg-primary text-primary-content" : "bg-primary text-primary-content"}
-                to="/schedule"
-                >
-                    <GoCalendar 
-                    className="text-xl"
-                    />
-                </NavLink>
                 
                 {/* Hold route to go to Queue page*/}
                 <NavLink

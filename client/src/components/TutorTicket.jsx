@@ -1,8 +1,71 @@
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {edit} from '../utilities/authSlice';
+import {editTicket} from '../utilities/ticketSlice';
+
 export const TutorTicket = (props) =>
 {
 
     // Deconstruct props
     const {id, description, product, status, tutor} = props;
+
+    // Deconstruct the user state\
+    const {user} = useSelector((state) => state.auth);
+
+    // Hold the dispatch hook
+    const dispatch = useDispatch();
+
+    // Hold the navigate hook
+    const navigate = useNavigate();
+
+    const acceptTicket = () =>
+    {
+        let data = {
+            id: id,
+            editData: {
+               status: 'open',
+               tutor: user.name
+            }
+        }
+
+        let userData = {
+            ...user,
+            isBusy: true
+        }
+
+        dispatch(editTicket(data));
+        dispatch(edit(userData));
+        navigate(`/tutor-tickets/${user.name}`)
+    }
+
+    const deleteTicket = () =>
+    {
+
+        let data = {
+            id: id,
+            editData: {
+               status: 'new',
+               tutor: null
+            }
+        }
+
+        let userData = {
+            ...user,
+            isBusy: false
+        }
+        dispatch(edit(userData));
+        dispatch(editTicket(data));
+    }
+
+    useEffect(() =>
+    {
+        if(user.isBusy)
+        {
+            navigate(`/tutor-tickets/${user.name}`)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     return (
         <>
@@ -26,11 +89,26 @@ export const TutorTicket = (props) =>
                     >
                     
                         {/* Hold button to change status of ticket */}
-                        <button 
-                        className="btn btn-primary"
-                        >
-                            Accept
-                        </button>
+                        {status === 'new' ?
+                        <>
+                            <button 
+                            className="btn btn-primary"
+                            disabled={user.isBusy ? true : false}
+                            onClick={acceptTicket}
+                            >
+                                Accept
+                            </button>
+                        </>
+                        :
+                        <>
+                            <button 
+                            className="btn btn-error"
+                            onClick={deleteTicket}
+                            >
+                                Delete
+                            </button>
+                        </>
+                        }
                     </div>
 
                     {/* Hold the Daisy UI alert component to check if the ticket has been accepted */}

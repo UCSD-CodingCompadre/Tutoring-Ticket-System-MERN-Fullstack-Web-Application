@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from  'react-router-dom';
 import {toast} from 'react-toastify';
 import {Spinner} from '../components/Spinner';
-import {setSubmission} from '../utilities/authSlice';
+import {edit, setSubmission} from '../utilities/authSlice';
 import {createTicket, reset} from '../utilities/ticketSlice';
 
 export const TicketForm = () =>
@@ -13,7 +13,7 @@ export const TicketForm = () =>
     const {user} = useSelector((state) => state.auth);
 
     // Deconstruct the ticket state
-    const {isLoading, isError, isSuccess, message} = useSelector((state) => state.ticket);
+    const {isLoading, isError, message} = useSelector((state) => state.ticket);
 
     // Hold the dispatch hook
     const dispatch = useDispatch();
@@ -30,7 +30,6 @@ export const TicketForm = () =>
     // Hold the useState for the description
     const [description, setDescription] = useState('');
 
-    
     // On render check the status of the actions
     useEffect(() => 
     {
@@ -42,15 +41,15 @@ export const TicketForm = () =>
         }
 
         // Check if the ticket has been submitted to go view it
-        if(isSuccess)
+        if(user.hasSubmitted)
         {
             dispatch(reset());
-            dispatch(setSubmission());
             navigate('/my-tickets')
         }
 
         dispatch(reset());
-    }, [dispatch, isError, isSuccess, message, navigate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user.hasSubmitted, isError])
 
     // Component functions
 
@@ -65,8 +64,17 @@ export const TicketForm = () =>
         // Prevent page refresh
         e.preventDefault();
 
+        // Set the submission
+        dispatch(setSubmission());
+        
         // Dispatch the create ticket action
         dispatch(createTicket({product, description}))
+
+        // Dispatch the submission user action
+        dispatch(edit({
+            ...user,
+            hasSubmitted: true
+        }))
     }
 
     // Check if the ticket form is loading

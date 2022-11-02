@@ -4,15 +4,18 @@ import {Navbar} from '../components/Navbar';
 import {PrivateRoute} from '../components/PrivateRoute';
 import {RedirectRoute} from '../components/RedirectRoute';
 import {EditTicket} from '../pages/EditTicket';
+import {ErrorPage} from '../pages/ErrorPage';
 import {Home} from '../pages/Home';
 import {Register}from '../pages/Register';
-import {Schedule} from '../pages/Schedule';
 import {SignIn} from '../pages/SignIn';
 import {StudentTickets} from '../pages/StudentTickets';
 import {TicketForm} from '../pages/TicketForm';
+import {TicketQueue} from '../pages/TicketQueue';
 import {TutorTickets} from '../pages/TutorTickets';
+import {ZoomRoom} from '../pages/ZoomRoom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function App() 
@@ -71,7 +74,18 @@ function App()
               <Route element={<TutorTickets />} path="/tutor-tickets"></Route>
             </Route>
 
-            <Route element={<Schedule />} path="/schedule"></Route>
+            {/* Establish route to prevent unauthorized users */}
+            <Route element={<PrivateRoute />} path="/tutor-tickets/:tutor">
+              
+              {/* Establish route to edit so student can edit their ticket */}
+              <Route element={<ZoomRoom />} path="/tutor-tickets/:tutor"></Route>
+            </Route>
+
+            {/* Establish the route to see all the tickets in queue */}
+            <Route element={<TicketQueue />} path="/queue"></Route>
+            
+            {/* Establish the route for any unrecognized route*/}
+            <Route element={<ErrorPage />} path="/*"></Route>
           </Routes>
         </main>
 

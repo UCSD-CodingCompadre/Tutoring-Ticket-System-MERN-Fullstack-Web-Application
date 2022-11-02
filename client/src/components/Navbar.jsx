@@ -26,9 +26,9 @@ export const Navbar = () =>
     */
     const signOut = () =>
     {
-        dispatch(logout());
         dispatch(reset());
         dispatch(clearTickets());
+        dispatch(logout());
         navigate('/');
     }
 
