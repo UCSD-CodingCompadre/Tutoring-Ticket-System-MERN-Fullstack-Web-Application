@@ -1,5 +1,5 @@
 import {NavLink} from 'react-router-dom';
-import {GoCalendar, GoHome, GoNote} from 'react-icons/go';
+import {GoHome, GoNote} from 'react-icons/go';
 
 export const Footer = () =>
 {

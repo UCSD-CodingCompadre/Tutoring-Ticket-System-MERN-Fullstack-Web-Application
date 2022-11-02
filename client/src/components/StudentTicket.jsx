@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {clearSubmission, edit} from '../utilities/authSlice';
+import {edit} from '../utilities/authSlice';
 import {deleteTicket} from '../utilities/ticketSlice';
 
 export const StudentTicket = (props) =>
@@ -22,7 +22,7 @@ export const StudentTicket = (props) =>
 
     const deleteStudentTicket = (ticketId) =>
     {
-        dispatch(clearSubmission());
+
         // Dispatch the submission user action
         dispatch(edit({
             ...user,
