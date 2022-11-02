@@ -10,8 +10,10 @@ const Ticket = require('../models/ticketModel');
 const getTickets = asyncHandler(async (req, res) =>
 {
 
+    console.log(req.user)
+
     // Hold the user
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.id);
 
     // Check if the user exists
     if(!user)
@@ -21,7 +23,7 @@ const getTickets = asyncHandler(async (req, res) =>
     }
 
     // Retrieve tickets from MongoDB
-    const tickets = await Ticket.find({user: req.user._id});
+    const tickets = await Ticket.find({user: req.user.id});
 
     res.status(200).json(tickets);
 })
@@ -56,7 +58,7 @@ const getSingleTicket = asyncHandler(async(req, res) =>
 {
 
     // Hold the user
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.id);
 
     // Check if there is a user
     if(!user)
@@ -66,7 +68,7 @@ const getSingleTicket = asyncHandler(async(req, res) =>
     }
 
     // Hold and find a ticket
-    const ticket = await Ticket.findById(req.params._id);
+    const ticket = await Ticket.findById(req.params.id);
 
     // Check if there is a ticket
     if(!ticket)
@@ -104,7 +106,7 @@ const createTicket = asyncHandler(async (req, res) =>
     }
 
     // Hold the user
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.id);
 
     // Check if there is a user
     if(!user)
