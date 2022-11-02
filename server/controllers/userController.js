@@ -57,14 +57,14 @@ const registerUser =  asyncHandler(async(req, res) =>
         // Post request the user 
         res.status(201).json(
             {
-                _id: user._id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 isAdmin: false,
                 isBusy: false,
                 isProfessor: false,
                 hasSubmitted: false,
-                token: generateToken(user._id)
+                token: generateToken(user.id)
             }
         )
     }
@@ -100,7 +100,7 @@ const loginUser = asyncHandler(async(req, res) =>
         // Post request the user logged in
         res.status(200).json(
             {
-                _id: user._id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
@@ -130,7 +130,7 @@ const getMe = asyncHandler(async(req, res) =>
 
     // Get the user data
     const user = {
-        id: req.user._id,
+        id: req.user.id,
         email: req.user.email,
         name: req.user.name
     }
