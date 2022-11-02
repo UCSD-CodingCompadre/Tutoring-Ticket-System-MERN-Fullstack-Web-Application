@@ -104,7 +104,7 @@ const loginUser = asyncHandler(async(req, res) =>
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
-                isBusy: user.isBusy,
+                isBusy: false,
                 isProfessor: user.isProfessor,
                 hasSubmitted: user.hasSubmitted,
                 token: generateToken(user.id)
