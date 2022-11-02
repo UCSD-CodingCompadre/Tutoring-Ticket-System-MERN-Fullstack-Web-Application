@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json())
 
 // Hold middleware to accept url encoded form
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
 
 // Use the routes for the user API
 app.use('/api/users', require('./routes/userRoutes'));
