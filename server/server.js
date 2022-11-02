@@ -33,6 +33,11 @@ if(process.env.NODE_ENV === 'production')
     {
         res.sendFile(path.join(__dirname, '../client/build/index.html'))
     })
+
+    app.get('/', (req, res) => 
+    {
+        res.status(200).json({message: 'Welcome to my Tutoring Ticket System'})
+    })
 }
 else
 {
