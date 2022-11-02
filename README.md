@@ -64,12 +64,4 @@ weeder
 
 dev@gmail.com 
 
-## Missing Functionalities
-
-* Students being able to edit and delete tickets
-* Tutors being able to accept tickets 
-* Integrate a calender API for tutor's schedule
-* Construct the queue route so students can see when it's there turn and see what tutor is working on what ticket
-* Construct tablet and desktop layouts
-
 
