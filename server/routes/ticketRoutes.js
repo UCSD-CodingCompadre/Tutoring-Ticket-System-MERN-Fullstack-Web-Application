@@ -7,7 +7,7 @@ const {createTicket, deleteSingleTicket, getAllTickets, getSingleTicket, getTick
 
 // Set a GET request to retrieve user tickets
 // Set a POST request to add a ticket for the user
-router.route('/').get( getTickets).post( createTicket);
+router.route('/').get(getTickets).post(createTicket);
 
 // Set a GET request for the tutor to retrieve all tickets
 router.route('/tutor-view').get(getAllTickets);
