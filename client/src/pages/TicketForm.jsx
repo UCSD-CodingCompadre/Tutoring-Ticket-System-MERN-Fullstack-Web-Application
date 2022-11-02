@@ -63,9 +63,6 @@ export const TicketForm = () =>
 
         // Prevent page refresh
         e.preventDefault();
-
-        // Set the submission
-        dispatch(setSubmission());
         
         // Dispatch the create ticket action
         dispatch(createTicket({product, description}))
