@@ -184,6 +184,22 @@ export const authSlice = createSlice(
                     state.isError = true;
                     state.message = action.payload;
                 })
+                .addCase(edit.pending, (state) =>
+                {
+                    state.isLoading = true
+                })
+                .addCase(edit.fulfilled, (state, action) =>
+                {
+                    state.isLoading = false;
+                    state.isSuccess = true;
+                    state.user= action.payload;
+                })
+                .addCase(edit.rejected, (state, action) =>
+                {
+                    state.isLoading = false;
+                    state.isError = true;
+                    state.message = action.payload;
+                })
         },
     }
 )
