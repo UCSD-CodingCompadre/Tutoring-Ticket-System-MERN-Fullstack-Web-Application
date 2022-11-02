@@ -108,7 +108,7 @@ const createTicket = asyncHandler(async (req, res) =>
     }
 
     // Hold the user
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user._id);
 
     // Check if there is a user
     if(!user)
@@ -122,7 +122,7 @@ const createTicket = asyncHandler(async (req, res) =>
         {
             product,
             description,
-            user: req.user.id,
+            user: req.user._id,
             status: 'new',
             tutor: null
         }
