@@ -4,9 +4,7 @@ This is a ticket system for a university tutoring center. I based this ticket sy
 
 # Dev Update
 
-The app refuses to work on Heroku and the help online leads me to nowhere. As the dev I decided to take what I learned from this project and move on. I have other projects and courses to work on and I will fix this mistake learning from those courses by implementing a second version of this application with the schedule page and manager working. I noticed I had to reconstruct the app with a wireframe to understand exactly what I need to do therefore, I will just work on other MERN apps from courses to best understand the approach. All my learning is clearly documented in my files.
-
-### Feel free to run this locally 
+Will not implement schedule section for v1, therefore there is no professor user. Key thing I learned from this project was to plan before attempting a MERN stack application. The minimal viable product is complete. 
 
 # Types of Users
 
@@ -33,38 +31,31 @@ and password  NOTE: based on university criteria the email can be verified if it
 
 
 ## Student Tests
+### All students have the same password which is abc
 student1@gmail.com
-abc
 
 student2@gmail.com
-123
 
 student3@gmail.com
-def
 
 student4@gmail.com
-456
 
 student5@gmail.com
-ghi
 
 student6@gmail.com
-789
+
 
 ## Tutor Tests
+### All tutors have the same password which is 123
 
 tutor1@gmail.com
-abc
 
 tutor2@gmail.com
-123
 
 tutor3@gmail.com
-qwerty
 
-## Professor Tests
-professorCurtTheHurt@gmail.com
-weeder
+
+~~ ## Professor Tests ~~
 
 ## Dev account
 
