@@ -12,13 +12,13 @@ router.post('/', registerUser);
 router.post('/login', loginUser);
 
 // Set a GET request to retrieve user data
-router.get('/me', protect, getMe);
+router.get('/me', getMe);
 
 // Set a GET request to get tutors
 router.get('/tutors', getTutors);
 
 // Set a PUT request to set the user submission
-router.put('/submitted', protect, setUser);
+router.put('/submitted', setUser);
 
 // Export the router for the user API
 module.exports = router;
