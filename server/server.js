@@ -24,25 +24,28 @@ app.use('/api/users', require('./routes/userRoutes'));
 // Use the routes for the ticket API
 app.use('/api/tickets', require('./routes/ticketRoutes'));
 
-// Hold the middleware for error handling
-app.use(errorHandler);
-
 // Serve the client 
 if(process.env.NODE_ENV === 'production')
 {
     app.use(express.static(path.join(__dirname, '../client/build')))
 
-    app.get('*', (req, res) => res.sendFile(__direname, '../', 'client', 'build', 'index.html'))
+    app.get('*', (_, res) => 
+    {
+        res.sendFile(path.join(__direname, '../client/build/index.html'))
+    });
 }
 else
 {
-    
+
     // Set default route
     app.get('/', (req, res) => 
     {
         res.status(200).json({message: 'Welcome to my Tutoring Ticket System'})
     })
 }
+
+// Hold the middleware for error handling
+app.use(errorHandler);
 
 // Run Express.js server on port 5000
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
