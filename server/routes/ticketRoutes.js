@@ -10,7 +10,7 @@ const {protect} = require('../middleware/authMiddleware');
 router.route('/').get(protect, getTickets).post(protect, createTicket);
 
 // Set a GET request for the tutor to retrieve all tickets
-router.route('/tutor-view').get(protect, getAllTickets);
+router.route('/tutor-view').get(getAllTickets);
 
 // Set a GET request to retrieve a ticket
 // Set a DELETE request to delete a ticket

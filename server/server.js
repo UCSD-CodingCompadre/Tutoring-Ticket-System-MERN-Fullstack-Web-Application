@@ -29,7 +29,7 @@ app.use('/api/users', require('./routes/userRoutes'));
 // Use the routes for the ticket API
 app.use('/api/tickets', require('./routes/ticketRoutes'));
 
-// Hold the middle for error handling
+// Hold the middleware for error handling
 app.use(errorHandler);
 
 // Run Express.js server on port 5000

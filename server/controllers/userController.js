@@ -44,6 +44,7 @@ const registerUser =  asyncHandler(async(req, res) =>
             email: email,
             password: hashedPassword,
             isAdmin: false,
+            isBusy: false,
             isProfessor: false,
             hasSubmitted: false
         }
@@ -60,6 +61,7 @@ const registerUser =  asyncHandler(async(req, res) =>
                 name: user.name,
                 email: user.email,
                 isAdmin: false,
+                isBusy: false,
                 isProfessor: false,
                 hasSubmitted: false,
                 token: generateToken(user.id)
@@ -102,6 +104,7 @@ const loginUser = asyncHandler(async(req, res) =>
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
+                isBusy: user.isBusy,
                 isProfessor: user.isProfessor,
                 hasSubmitted: user.hasSubmitted,
                 token: generateToken(user.id)
@@ -135,6 +138,45 @@ const getMe = asyncHandler(async(req, res) =>
     res.json(user);
 })
 
+const setUser = asyncHandler(async(req, res) =>
+{
+
+    // Hold the user email
+    const {email} = req.body
+
+    // Hold a user
+    const user = await User.findOne({email});
+
+    // Check if there is a user
+    if(!user)
+    {
+        res.status(401);
+        throw new Error('User not found');
+    }
+
+    // Update the ticket on MongoDB
+    const updatedUser = await User.findByIdAndUpdate(user.id, req.body, {new: true})
+
+    res.status(200).json(updatedUser)
+})
+
+const getTutors = asyncHandler(async(req, res) =>
+{
+
+    let tutors = await User.find({isAdmin: true, isProfessor: false}).exec();
+    
+    if(!tutors)
+    {
+        res.status(401);
+        throw new Error('Tutors not found')
+    }
+
+    else
+    {
+        res.status(200).json(tutors);
+    }
+})
+
 /*
 Generate a JSON Web Token
 @param id the users id
@@ -150,6 +192,8 @@ const generateToken = (id) =>
 module.exports = 
 {
     getMe,
+    getTutors,
     loginUser,
-    registerUser
+    registerUser,
+    setUser
 }

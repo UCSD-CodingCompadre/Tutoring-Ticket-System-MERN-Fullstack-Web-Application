@@ -34,17 +34,13 @@ const getTickets = asyncHandler(async (req, res) =>
 const getAllTickets = asyncHandler(async(req, res) =>
 {
 
-    // Hold the user
-    const user = await User.findById(req.user.id);
-
     // Check if user is a tutor
-    if(user.isAdmin)
+    try
     {
         const tickets = await Ticket.find();
         res.status(200).json(tickets);
     }
-
-    else
+    catch(error)
     {
         res.status(401);
         throw new Error('Not a tutor.')
