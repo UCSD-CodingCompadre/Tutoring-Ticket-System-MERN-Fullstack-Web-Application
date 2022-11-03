@@ -20,20 +20,36 @@ export const StudentTicket = (props) =>
 
     // Component functions
 
+    /*
+    Delete the student's ticket
+    @parm ticketId the id of the ticket in MongoDB
+    @return none
+    */
     const deleteStudentTicket = (ticketId) =>
     {
 
-        // Dispatch the submission user action
+        // Dispatch the new the status of the user
         dispatch(edit({
             ...user,
             hasSubmitted: false
         }))
+
+        // Dispatch the deleteTicket action
         dispatch(deleteTicket(ticketId));
+        
+        // Navigate to the Home page
         navigate('/')
     }
     
+    /*
+    Navigate the user to the edit form
+    @param ticketId the id of the ticket in MongoDB
+    @return none
+    */
     const editStudentTicket = (ticketId) =>
     {
+
+        // Navigate to the edit form page
         navigate(`/my-tickets/${ticketId}`)
     }
 
@@ -61,7 +77,8 @@ export const StudentTicket = (props) =>
                         
                         {/* Hold the route to edit the student's ticket */}
                         <button 
-                        className="btn btn-primary" 
+                        className="btn btn-primary"
+                        disabled={status === 'open' ? true : false} 
                         onClick={() => editStudentTicket(id)}
                         >
                             Edit

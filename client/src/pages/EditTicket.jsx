@@ -39,6 +39,8 @@ export const EditTicket = () =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isError])
 
+    // Component functions
+
      /*
     Edit a ticket using the dispatch hook
     @param e the event

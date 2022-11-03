@@ -5,6 +5,8 @@ export const QueueTicket = (props) =>
 
     return (
         <>
+
+            {/* Hold the Daisy UI card component for the ticket*/}
             <div 
             className="card w-80 bg-neutral text-neutral-content mt-8"
             >
@@ -17,6 +19,8 @@ export const QueueTicket = (props) =>
                     <p>
                         {description}
                     </p>
+                    
+                    {/* Conditional render the status of the ticket */}
                     {status === 'new' ? 
                     <>
                         <div 
@@ -66,7 +70,9 @@ export const QueueTicket = (props) =>
                                         
                                     </path>
                                 </svg>
-                                <span
+                               
+                               {/* Display the tutor associated with the ticket */}
+                               <span
                                 >
                                     Accepted by {tutor}
                                 </span>

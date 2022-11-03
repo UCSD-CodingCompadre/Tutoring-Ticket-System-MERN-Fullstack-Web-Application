@@ -1,10 +1,13 @@
 export const TutorCard = (props) =>
 {
 
+    // Deconstruct the props
     const {name, status} = props;
 
     return (
         <>
+
+            {/* Conditional render the tutor's status */}
             {status ?
                 <>
                     <div className="alert alert-error mt-2">

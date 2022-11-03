@@ -9,17 +9,25 @@ import {Spinner} from '../components/Spinner';
 export const TicketQueue = () =>
 {
 
+    // Hold the tutors from state
     const {tutors} = useSelector((state) => state.auth);
 
+    // Deconstruct the ticket state
     const {tickets, isLoading, isSuccess} = useSelector((state) => state.ticket);
 
+    // Hold the dispatch hook
     const dispatch = useDispatch();
 
+    // On render fetch the tickets and tutors
     useEffect(() => {
       
+        // Dispatch the action to get all tickets
         dispatch(getAllTickets());
+
+        // Dispatch the action to get all tutors
         dispatch(getTheTutors());
     
+        // On unmount clear the tickets and reset the ticket state
         return () => 
         {
             if(isSuccess)
@@ -27,13 +35,11 @@ export const TicketQueue = () =>
                 dispatch(clearTickets());
                 dispatch(reset());   
             }
- 
         }
 
     }, [dispatch, isSuccess])
     
-    console.log(tutors)
-
+    
     // Check if the tickets are loading
     if(isLoading)
     {
@@ -44,6 +50,8 @@ export const TicketQueue = () =>
 
     return (
         <>
+        
+            {/* Hold the page to display the ticket order and tutors on duty */}
             <div 
             className="page w-screen flex flex-col items-center justify-center"
             >   
@@ -58,8 +66,12 @@ export const TicketQueue = () =>
                         >
                             Tutors on Duty
                         </h2>
+
+                        {/* Render all the tutors */}
                         {tutors.map((tutor) =>
                         {
+
+                            // Render the TutorCard component for each tutor
                             return (
                                 <TutorCard 
                                 name={tutor.name}
@@ -69,8 +81,12 @@ export const TicketQueue = () =>
                         })}
                     </div>
                 </div>
+
+                {/* Render all the tickets */}
                 {tickets.map((ticket) =>
                 {
+
+                    // Render the QueueTicket component for each ticket
                     return (
                         <QueueTicket 
                         description={ticket.description}

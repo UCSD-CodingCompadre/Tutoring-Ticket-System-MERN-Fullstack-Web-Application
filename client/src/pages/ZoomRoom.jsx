@@ -1,37 +1,67 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
-import {edit, reset, logout} from '../utilities/authSlice';
-import {deleteTicket} from '../utilities/ticketSlice';
+import {edit} from '../utilities/authSlice';
+import {editTicket} from '../utilities/ticketSlice';
  
 export const ZoomRoom = () =>
 {
 
+    // Hold the tickets from state
     const {tickets} = useSelector((state) => state.ticket)
 
+    // Hold the user from state
     const {user} = useSelector((state) => state.auth);
 
+    // Hold the navigate hook
     const navigate = useNavigate();
 
+    // Hold the params hook
     const params =  useParams();
 
+    // Hold the dispatch hook
     const dispatch = useDispatch();
 
+    // Hold the tutor name
     const tutor = params.tutor;
 
+    // Component functions
+    
+    /*
+    End the zoom call and delete the student's ticket
+    */
     const handleEndCall = () =>
     {
+
+        // Find the ticket that is active
         for(let i = 0; i < tickets.length; i++)
         {
+
+            // Check by seeing if the tutor is the same
             if(tickets[i].tutor === tutor)
             {
-                dispatch(deleteTicket(tickets[i]._id))
+
+                // Hold the new user data
                 let userData = {
                     ...user,
                     isBusy: false
                 }
+
+                // Dispatch the action to edit the user
                 dispatch(edit(userData));
-                dispatch(reset());
-                dispatch(logout());
+
+                //  Hold the new data of the ticket
+                let data = {
+                    id: tickets[i]._id,
+                    editData: {
+                    ...tickets[i],
+                    status: 'closed'
+                    }
+                }
+
+                // Dispatch the action to edit the ticket
+                dispatch(editTicket(data));
+
+                // Navigate back home
                 navigate('/')
             }
         }

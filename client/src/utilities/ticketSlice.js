@@ -51,6 +51,7 @@ export const getUserTickets = createAsyncThunk('tickets/getMyTickets', async(_, 
 
         // Hold the JWT of the student to find the tickets
         const token = thunkAPI.getState().auth.user.token;
+        console.log(token);
         return await ticketService.getMyTickets(token);
     }
 

@@ -33,8 +33,6 @@ export const StudentTickets = () =>
 
     }, [dispatch])
 
-    
-
     // Check if the tickets are loading
     if(isLoading)
     {

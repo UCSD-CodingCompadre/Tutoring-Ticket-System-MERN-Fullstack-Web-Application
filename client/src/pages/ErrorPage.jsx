@@ -2,6 +2,8 @@ export const ErrorPage = () =>
 {
     return (
         <>
+
+            {/* Hold a page for any route that has no page */}
             <div 
             className="page flex items-center justify-center px-8"
             >
