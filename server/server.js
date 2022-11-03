@@ -2,9 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const colors = require('colors');
 const path = require('path');
+const cors = require('cors');
 const {errorHandler} = require('./middleware/errorMiddleware');
 const connectDB = require('./config/database');
 const PORT = process.env.PORT || 5000;
+
 
 // Call async function to connect Node.js with MongoDB
 connectDB();
@@ -17,6 +19,9 @@ app.use(express.json())
 
 // Hold middleware to accept url encoded form
 app.use(express.urlencoded({extended: false}))
+
+// Enable cors
+app.use(cors());
 
 // Use the routes for the user API
 app.use('/api/users', require('./routes/userRoutes'));

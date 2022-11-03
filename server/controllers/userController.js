@@ -57,14 +57,14 @@ const registerUser =  asyncHandler(async(req, res) =>
         // Post request the user 
         res.status(201).json(
             {
-                id: user.id,
+                _id: user.id,
                 name: user.name,
                 email: user.email,
                 isAdmin: false,
                 isBusy: false,
                 isProfessor: false,
                 hasSubmitted: false,
-                token: generateToken(user.id)
+                token: generateToken(user._id)
             }
         )
     }
@@ -100,14 +100,14 @@ const loginUser = asyncHandler(async(req, res) =>
         // Post request the user logged in
         res.status(200).json(
             {
-                id: user.id,
+                _id: user.id,
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
                 isBusy: user.isBusy,
                 isProfessor: user.isProfessor,
                 hasSubmitted: user.hasSubmitted,
-                token: generateToken(user.id)
+                token: generateToken(user._id)
             }
         )
     }
@@ -196,9 +196,9 @@ Generate a JSON Web Token
 @param id the users id
 @return string a JWT to allow user authentication of routes and data 
 */
-const generateToken = (myId) =>
+const generateToken = (id) =>
 {
-    return jwt.sign({ myId }, process.env.JWT_SECRET, {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
         expiresIn: '30d'
     })
 }
