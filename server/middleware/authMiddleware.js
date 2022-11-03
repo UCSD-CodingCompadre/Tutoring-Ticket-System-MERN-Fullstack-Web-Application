@@ -41,6 +41,7 @@ const protect = asyncHandler(async (req, res, next) =>
         }
     }
 
+    // Check if there is no token
     if(!token)
     {
         res.status(401)

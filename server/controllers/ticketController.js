@@ -10,8 +10,6 @@ const Ticket = require('../models/ticketModel');
 const getTickets = asyncHandler(async (req, res) =>
 {
 
-    console.log(req.user)
-
     // Hold the user
     const user = await User.findById(req.user.id);
 
@@ -25,23 +23,26 @@ const getTickets = asyncHandler(async (req, res) =>
     // Retrieve tickets from MongoDB
     const tickets = await Ticket.find({user: req.user.id});
 
+    // Return the tickets 
     res.status(200).json(tickets);
 })
 
 /*
-@desc Get a all the tickets for the tutor
+@desc Get a all the tickets 
 @route /api/tickets/tutor-view
-@access Private
+@access Public
 */
 const getAllTickets = asyncHandler(async(req, res) =>
 {
 
-    // Check if user is a tutor
+    // Fetch the tickets 
     try
     {
         const tickets = await Ticket.find();
         res.status(200).json(tickets);
     }
+
+    // Else throw an Error
     catch(error)
     {
         res.status(401);
@@ -84,6 +85,7 @@ const getSingleTicket = asyncHandler(async(req, res) =>
         throw new Error('Not authorized');
     }
 
+    // Return the specific ticket
     res.status(200).json(ticket);
 })
 
@@ -126,6 +128,7 @@ const createTicket = asyncHandler(async (req, res) =>
         }
     )
 
+    // Post the ticket onto MongoDB
     res.status(200).json(ticket)
 })
 
@@ -167,6 +170,7 @@ const deleteSingleTicket = asyncHandler(async(req, res) =>
     // Remove the ticket from MongoDB
     await ticket.remove();
     
+    // Send a success message
     res.status(200).json({success: true});
 })
 
@@ -208,6 +212,7 @@ const updateSingleTicket = asyncHandler(async(req, res) =>
     // Update the ticket on MongoDB
     const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, req.body, {new: true})
     
+    // Put the new ticket in MongoDB
     res.status(200).json(updatedTicket);
 })
 

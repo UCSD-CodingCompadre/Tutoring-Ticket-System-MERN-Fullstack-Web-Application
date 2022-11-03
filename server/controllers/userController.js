@@ -104,7 +104,7 @@ const loginUser = asyncHandler(async(req, res) =>
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
-                isBusy: false,
+                isBusy: user.isBusy,
                 isProfessor: user.isProfessor,
                 hasSubmitted: user.hasSubmitted,
                 token: generateToken(user.id)
@@ -138,6 +138,11 @@ const getMe = asyncHandler(async(req, res) =>
     res.json(user);
 })
 
+/*
+@desc Edit a user
+@route /api/users/submitted
+@access Private
+*/
 const setUser = asyncHandler(async(req, res) =>
 {
 
@@ -154,23 +159,32 @@ const setUser = asyncHandler(async(req, res) =>
         throw new Error('User not found');
     }
 
-    // Update the ticket on MongoDB
+    // Update the user on MongoDB
     const updatedUser = await User.findByIdAndUpdate(user.id, req.body, {new: true})
 
+    // Put the user on the express route
     res.status(200).json(updatedUser)
 })
 
+/*
+@desc Get the tutors
+@route /api/users/tutors
+@access Public
+*/
 const getTutors = asyncHandler(async(req, res) =>
 {
 
+    // Hold the tutors from MongoDB by filtering the model
     let tutors = await User.find({isAdmin: true, isProfessor: false}).exec();
     
+    // Check if there is no tutors
     if(!tutors)
     {
         res.status(401);
         throw new Error('Tutors not found')
     }
 
+    // Else send the response to express
     else
     {
         res.status(200).json(tutors);
@@ -182,9 +196,9 @@ Generate a JSON Web Token
 @param id the users id
 @return string a JWT to allow user authentication of routes and data 
 */
-const generateToken = (id) =>
+const generateToken = (myId) =>
 {
-    return jwt.sign({id}, process.env.JWT_SECRET, {
+    return jwt.sign({ myId }, process.env.JWT_SECRET, {
         expiresIn: '30d'
     })
 }
