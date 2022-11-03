@@ -4,7 +4,7 @@ import {getAllTickets, reset} from '../utilities/ticketSlice';
 import {Spinner} from '../components/Spinner';
 import {TutorTicket}  from '../components/TutorTicket';
 
-export const TutorTickets = () =>
+export const TutorTickets = (props) =>
 {
 
     // Deconstruct the ticket state

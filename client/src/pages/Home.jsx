@@ -8,6 +8,7 @@ export const Home = () =>
 
     // Hold the user from the redux store
     const {user} = useSelector(state => state.auth)
+
     
     // Hold the dispatch hook
     const dispatch = useDispatch();

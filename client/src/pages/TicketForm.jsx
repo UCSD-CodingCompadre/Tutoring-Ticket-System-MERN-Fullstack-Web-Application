@@ -6,7 +6,7 @@ import {Spinner} from '../components/Spinner';
 import {edit} from '../utilities/authSlice';
 import {createTicket, reset} from '../utilities/ticketSlice';
 
-export const TicketForm = () =>
+export const TicketForm = (props) =>
 {
 
     // Hold the user logged in

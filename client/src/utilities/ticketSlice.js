@@ -51,15 +51,14 @@ export const getUserTickets = createAsyncThunk('tickets/getMyTickets', async(_, 
 
         // Hold the JWT of the student to find the tickets
         const token = thunkAPI.getState().auth.user.token;
-        console.log(token);
         return await ticketService.getMyTickets(token);
     }
 
     // Else throw an Error
     catch(error)
     {
-        const message = error.response.data.error;
-        return thunkAPI.rejectWithValue(message);
+
+        return thunkAPI.rejectWithValue(error);
     }
 })
 

@@ -7,6 +7,8 @@ import {StudentTicket}  from '../components/StudentTicket';
 export const StudentTickets = () =>
 {
 
+    const {user} = useSelector((state) => state.auth);
+
     // Deconstruct the ticket state
     const {tickets, isLoading, isSuccess} = useSelector((state) => state.ticket);
 
