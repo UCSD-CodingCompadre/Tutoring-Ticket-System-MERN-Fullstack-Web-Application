@@ -38,7 +38,7 @@ export const SignIn = () =>
         }
 
         // Check if the user is logged in
-        if(isSuccess || user)
+        if(isSuccess)
         {
             navigate('/')
         }
