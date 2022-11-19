@@ -219,7 +219,7 @@ export const Home = () =>
                                     <div 
                                     className="alert alert-info w-28 ml-auto mr-0px"
                                     >
-                                        There is approximately 420 tickets according to MongoDB. Better submit a ticket still 🚫👒.
+                                        There is approximately 21 tickets according to MongoDB. Better submit a ticket still 🚫👒.
                                     </div>
                                 </div>
                             </div>
