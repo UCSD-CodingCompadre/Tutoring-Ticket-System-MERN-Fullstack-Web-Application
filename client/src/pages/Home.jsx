@@ -101,7 +101,7 @@ export const Home = () =>
                                         <div 
                                         className="alert alert-info w-28"
                                         >
-                                            Nah foo I am using Raul's new ticket system.
+                                            Nah I am using Raul's new ticket system.
                                         </div>
                                     </div>
                                 </>
@@ -187,75 +187,44 @@ export const Home = () =>
             :
             <> 
 
-                {/* Hold the page if there is no user logged in */}
+            {/* Hold the page if there is no user logged in */}
+            <div 
+            className="page px-4 flex justify-center items-center flex flex-col w-screen"
+            >
                 <div 
-                className="page px-4 flex justify-center items-center flex flex-col w-screen"
+                className="mockup-phone border-primary h-[450px] w-[225px] text-sm"
                 >
                     <div 
-                    className="mockup-phone border-primary h-[450px] w-[225px] text-sm"
+                    className="camera"
+                    >
+                        </div> 
+                    <div 
+                    className="display h-full w-full"
                     >
                         <div 
-                        className="camera"
-                        >
-                            </div> 
-                        <div 
-                        className="display h-full w-full"
+                        className="artboard h-full w-full relative"
                         >
                             <div 
-                            className="artboard h-full w-full relative"
+                            className="toast toast-top toast-start relative mt-2"
                             >
                                 <div 
-                                className="toast toast-top toast-start relative mt-2"
+                                className="alert alert-success w-24"
                                 >
-                                    <div 
-                                    className="alert alert-success w-24"
-                                    >
-                                        Hey foo how many tickets are there?
-                                    </div>
+                                    Hey how many tickets are there?
                                 </div>
+                            </div>
+                            <div 
+                            className="toast toast-top toast-end relative"
+                            >
                                 <div 
-                                className="toast toast-top toast-end relative"
+                                className="alert alert-info w-28 ml-auto mr-0px"
                                 >
-                                    <div 
-                                    className="alert alert-info w-28 ml-auto mr-0px"
-                                    >
-                                        There is approximately 21 tickets according to MongoDB. Better submit a ticket still 🚫👒.
-                                    </div>
+                                    There is approximately 21 tickets according to MongoDB. Better submit a ticket still.
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    {/* Hold the Daisy UI modal component to remind the user to create an account */}
-                    <input 
-                    type="checkbox" 
-                    defaultChecked={reminder} 
-                    id="my-modal-3" 
-                    className="modal-toggle" />
-                    <div 
-                    className="modal"
-                    >
-                        <div
-                         className="modal-box relative"
-                         >
-                            <label 
-                            htmlFor="my-modal-3" 
-                            className="btn btn-sm btn-circle absolute right-2 top-2"
-                            onClick={() => setReminder(false)}>
-                                ✕
-                            </label>
-                            <h3 
-                            className="text-lg font-bold pt-4"
-                            >
-                                Welcome to CodingCocho's CSE/ECE Tutoring Center Ticket System
-                            </h3>
-                            <p 
-                            className="py-4"
-                            >
-                                Thank you for checking out my application! Before we get to exploring the functionality lets's make on account!
-                            </p>
-                        </div>
-                    </div>
+                </div>
             </div>
             </>
             }
