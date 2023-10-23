@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page
+{
+    min-height: calc(100vh - 128px);
+}
+
+.react-datepicker__input-container 
+{
+    display: block !important;
+    width: fit-content !important;
+}
+
+.react-datepicker-wrapper
+{
+    display: block !important;
+    width: fit-content !important;
+}
